@@ -6,14 +6,16 @@ import './Menu.css';
 
 import Button from '../Button';
 
+import { Link } from 'react-router-dom';
+
 
 export default function Menu() {
   return (
     <nav className="Menu">
-      <a href="/" >
+      <Link to="/" >
         <img className="Logo" src={Logo} alt="MinhaFLix logo"/>
-      </a>
-      <Button as="a" className="ButtonLink" href="/novo">
+      </Link>
+      <Button to="/cadastro/video" as={Link} className="ButtonLink">
         Novo vídeo
       </Button>
     </nav>
