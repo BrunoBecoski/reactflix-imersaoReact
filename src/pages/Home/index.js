@@ -14,7 +14,6 @@ export default function Home() {
   useEffect(() => {
     categoriasRepository.getAllWithVideos()
       .then((categoriasComVideos) => {
-        console.log(categoriasComVideos);
         setDadosIniciais(categoriasComVideos);
       })
       .catch((err) => {
