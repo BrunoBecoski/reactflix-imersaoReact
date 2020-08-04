@@ -6,6 +6,8 @@ import PageDefault from '../../../components/PageDefault';
 import FormField from '../../../components/FormField';
 import Button from '../../../components/Button';
 
+import useForm from '../../../hooks/useForm';
+
 export default function CadastroCategoria() {
   const valoresIniciais = {
     nome: '',
@@ -13,32 +15,24 @@ export default function CadastroCategoria() {
     cor: '',
   };
 
+  const { handleChange, values, clearForm } = useForm(valoresIniciais);
+
   const [categorias, setCategorias] = useState([]);
-  const [values, setValues] = useState(valoresIniciais);
-
-  function setValue(chave, valor) {
-    setValues({
-      ...values,
-      [chave]: valor,
-    });
-  }
-
-  function handleChange(infosDoEvento) {
-    const { name, value } = infosDoEvento.target;
-    setValue(
-      name,
-      value,
-    );
-  }
 
   useEffect(() => {
     const URL_TOP = 'http://localhost:8080/categorias';
+
+    /*
+      const URL_TOP = window.location.hostname.includes('localhost')
+      ? 'http://localhost:8080/categorias'
+      : 'https://devsoutinhoflix.herokuapp.com/categorias';
+    */
 
     fetch(URL_TOP).then(async (respostaDoServidor) => {
       const resposta = await respostaDoServidor.json();
       setCategorias([...resposta]);
     });
-  }, []);
+  });
 
   return (
 
@@ -55,13 +49,12 @@ export default function CadastroCategoria() {
           values,
         ]);
 
-        setValues(valoresIniciais);
+        clearForm();
       }}
       >
 
         <FormField
           label="Nome da Categoria"
-          type="text"
           name="nome"
           value={values.nome}
           onChange={handleChange}
@@ -95,14 +88,14 @@ export default function CadastroCategoria() {
 
       <ul>
         {categorias.map((categoria) => (
-          <li key={`${categoria.nome}`}>
-            {categoria.nome}
+          <li key={`${categoria.titulo}`}>
+            {categoria.titulo}
           </li>
         ))}
       </ul>
 
       <Link to="/">
-        <strong>Ir para home</strong>
+        Ir para home
       </Link>
     </PageDefault>
   );
