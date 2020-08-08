@@ -32,7 +32,7 @@ export default function CadastroCategoria() {
       const resposta = await respostaDoServidor.json();
       setCategorias([...resposta]);
     });
-  });
+  }, []);
 
   return (
 
